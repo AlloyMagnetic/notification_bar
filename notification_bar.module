@@ -1,5 +1,23 @@
 <?php
 
+/**
+ * Add the following markup to the page template where you want the output to appear
+ */
+
+/**
+ * 
+ * <?php if (variable_get('notification_bar_enabled')): ?>
+ *   <?php if (variable_get('notification_bar_url')):?><a href="<?php print variable_get('notification_bar_url');?>"><?php endif; ?>
+ *     <div class="statusbar" style="background-color: <?php print variable_get('notification_bar_color'); ?>; color: #FFFFFF; padding-top: 10px; padding-bottom: 10px; font-weight: bold; text-align: center; letter-spacing: .02em;">
+ *       <div class="container" style="max-width: 1100px; margin-left: auto; margin-right: auto;">
+ *         <?php print variable_get('notification_bar_message'); ?>
+ *       </div>
+ *     </div>
+ *   <?php if (variable_get('notification_bar_url')):?></a><?php endif; ?>
+ * <?php endif; ?>
+ * 
+ */
+
 function notification_bar_menu() {
   $items['admin/config/system/notification_bar'] = array(
     'title' => 'Notification Bar',
@@ -9,7 +27,34 @@ function notification_bar_menu() {
     'access arguments' => array('access content overview'),
     'type' => MENU_NORMAL_ITEM,
   );
+  $items['admin/config/system/notification_bar/config'] = array(
+    'title' => 'Notification Bar Configuration',
+    'description' => 'Configure notification bar.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('notification_bar_admin_config_form'),
+    'access arguments' => array('administer content'),
+    'type' => MENU_NORMAL_ITEM,
+  );
   return $items;
+}
+
+function notification_bar_admin_config_form($form, &$form_state) {
+  $form['notification_bar_additional_color_options'] = [
+    '#type' => 'textarea',
+    '#title' => 'Theme Colors',
+    '#description' => 'Enter theme colors one per line in the format <b>#000000|Black</b>',
+    '#default_value' => variable_get('notification_bar_additional_color_options', '')
+  ];
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save configuration'),
+  );
+  return $form;
+}
+
+function notification_bar_admin_config_form_submit($form, &$form_state) {
+  variable_set('notification_bar_additional_color_options', $form_state['values']['notification_bar_additional_color_options']);
+  drupal_set_message(t('The configuration options have been saved.'));
 }
 
 function notification_bar_admin_settings_form($form, &$form_state) {
@@ -23,14 +68,22 @@ function notification_bar_admin_settings_form($form, &$form_state) {
     '#title' => 'Color',
     '#options' => [
       '#000000' => 'Black',
-      '#D10000' => 'Red',
-      '#FF671F' => 'Orange',
-      '#00AFD7' => 'Blue',
-      '#C4D600' => 'Green'
+      '#D10000' => 'Danger Red',
+      '#FF671F' => 'Caution Orange',
+      '#00AFD7' => 'Information Blue',
+      '#C4D600' => 'Good Green'
     ],
     '#required' => true,
     '#default_value' => variable_get('notification_bar_color', '#000000')
   ];
+  $additional_colors = variable_get('notification_bar_additional_color_options');
+  if ($additional_colors) {
+    $colors = explode("\r\n", $additional_colors);
+    foreach($colors as $color) {
+      $color = explode('|', $color);
+      $form['notification_bar_color']['#options'][$color[0]] = $color[1];
+    }
+  }
   $form['notification_bar_message'] = [
     '#type' => 'textarea',
     '#title' => 'Message',
@@ -42,7 +95,6 @@ function notification_bar_admin_settings_form($form, &$form_state) {
     '#title' => 'URL',
     '#default_value' => variable_get('notification_bar_url', '')
   ];
-
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Save configuration'),
@@ -58,10 +110,8 @@ function notification_bar_admin_settings_form_submit($form, &$form_state) {
   else {
     variable_del('notification_bar_enabled');
   }
-
   variable_set('notification_bar_color', $form_state['values']['notification_bar_color']);
   variable_set('notification_bar_message', $form_state['values']['notification_bar_message']);
   variable_set('notification_bar_url', $form_state['values']['notification_bar_url']);
-  
-  drupal_set_message(t('The configuration options have been saved.'));
+  drupal_set_message(t('The notification bar settings have been saved.'));
 }
