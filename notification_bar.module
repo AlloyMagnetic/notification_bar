@@ -68,10 +68,10 @@ function notification_bar_admin_settings_form($form, &$form_state) {
     '#title' => 'Color',
     '#options' => [
       '#000000' => 'Black',
-      '#D10000' => 'Danger Red',
-      '#FF671F' => 'Caution Orange',
-      '#00AFD7' => 'Information Blue',
-      '#C4D600' => 'Good Green'
+      '#d9534f' => 'Danger Red',
+      '#f0ad4e' => 'Caution Orange',
+      '#5bc0de' => 'Information Blue',
+      '#5cb85c' => 'Good Green'
     ],
     '#required' => true,
     '#default_value' => variable_get('notification_bar_color', '#000000')
