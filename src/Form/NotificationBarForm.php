@@ -8,7 +8,7 @@ use Drupal\Core\Cache\Cache;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 
-class HabitatStatusbarForm extends FormBase {
+class NotificationBarForm extends FormBase {
   function getFormId() {
     return "notification_bar_form";
   }
@@ -28,20 +28,6 @@ class HabitatStatusbarForm extends FormBase {
       '#type' => 'checkbox',
       '#title' => $this->t('Enabled'),
       '#default_value' => $value['enabled']
-    ];
-
-    $form['color'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Color'),
-      '#default_value' => $value['color'],
-      '#options' => [
-        '#000000' => 'Black',
-        '#D10000' => 'Red',
-        '#FF671F' => 'Orange',
-        '#00AFD7' => 'Blue',
-        '#C4D600' => 'Green'
-      ],
-      '#required' => true
     ];
 
     $form['message'] = [  
@@ -71,7 +57,6 @@ class HabitatStatusbarForm extends FormBase {
     $value = [
       'enabled' => $form_state->getValue('enabled'),
       'message' => $form_state->getValue('message'),
-      'color' => $form_state->getValue('color'),
       'url' => $form_state->getValue('url')
     ];
     \Drupal::state()->set('notification_bar', $value);
