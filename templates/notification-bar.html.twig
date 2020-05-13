@@ -1,0 +1,16 @@
+{{ attach_library('notification_bar/notification_bar') }}
+
+<section class="notification_bar urgent" style="display: none;">
+  <div class="container">
+    <div class="row">
+      {% if url %}
+        <div class="match col-sm-8 col-md-9"><div class="vtable"><div class="vcell">{{ message }}</div></div></div>
+        <div class="match col-sm-3 col-md-2 cta"><div class="vtable"><div class="vcell"><a class="btn" href="{{ url }}">Learn More</a></div></div></div>
+        <div class="match col-sm-1 dismiss">×</div>
+      {% else %}
+        <div class="col-xs-11">{{ message }}</div>
+        <div class="col-sm-1 dismiss">×</div>
+      {% endif %}
+    </div>
+  </div>
+</section>
