@@ -4,12 +4,12 @@
   <div class="container">
     <div class="row">
       {% if url %}
-        <div class="match col-sm-8 col-md-9"><div class="vtable"><div class="vcell">{{ message }}</div></div></div>
+        <div class="match col-sm-8 col-md-9 message"><div class="vtable"><div class="vcell"><span class="text">{{ message }}</span></div></div></div>
         <div class="match col-sm-3 col-md-2 cta"><div class="vtable"><div class="vcell"><a class="btn" href="{{ url }}">Learn More</a></div></div></div>
-        <div class="match col-sm-1 dismiss">×</div>
+        <div class="match col-sm-1 dismiss"><span class="x">×</span></div>
       {% else %}
-        <div class="match col-xs-11">{{ message }}</div>
-        <div class="match col-sm-1 dismiss">×</div>
+        <div class="match col-xs-11 message"><span class="text">{{ message }}</span></div>
+        <div class="match col-sm-1 dismiss"><span class="text"><span class="x">×</span></span></div>
       {% endif %}
     </div>
   </div>

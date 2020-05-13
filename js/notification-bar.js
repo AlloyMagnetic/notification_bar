@@ -13,7 +13,7 @@
       }
 
       //once the mouse is hovered over the <maindiv>
-      $(".notification_bar .dismiss").click(function(){
+      $(".notification_bar .dismiss span").click(function(){
         sessionStorage.setItem("visited","true");
         $('.notification_bar').slideUp();
       });
