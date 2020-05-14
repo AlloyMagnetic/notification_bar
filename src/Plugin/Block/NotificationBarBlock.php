@@ -26,7 +26,8 @@ class NotificationBarBlock extends BlockBase {
     $build['content'] = [
       '#theme' => 'notification_bar',
       '#message' => $notification_bar['message'],
-      '#url' => $notification_bar['url']
+      '#url' => $notification_bar['url'],
+      '#button_text' => $notification_bar['button_text']
     ];
     return $build;
   }

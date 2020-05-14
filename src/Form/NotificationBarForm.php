@@ -43,6 +43,12 @@ class NotificationBarForm extends FormBase {
       '#default_value' => $value['url']
     ];
 
+    $form['button_text'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Button text'),
+      '#default_value' => $value['button_text']
+    ];
+
     $form['actions']['#type'] = 'actions';
     $form['actions']['submit'] = [
       '#type' => 'submit',
@@ -57,7 +63,8 @@ class NotificationBarForm extends FormBase {
     $value = [
       'enabled' => $form_state->getValue('enabled'),
       'message' => $form_state->getValue('message'),
-      'url' => $form_state->getValue('url')
+      'url' => $form_state->getValue('url'),
+      'button_text' => $form_state->getValue('button_text')
     ];
     \Drupal::state()->set('notification_bar', $value);
     drupal_flush_all_caches();
