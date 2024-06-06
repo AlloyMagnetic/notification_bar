@@ -5,3 +5,7 @@ notification_bar:
       css/notification-bar-layout.css: {}
   js:
     js/notification-bar.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/once

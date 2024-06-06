@@ -2,7 +2,7 @@
 
   Drupal.behaviors.notificationBarMatchHeight = {
     attach: function (context, settings) {
-      $('.notification_bar .match').once('matchHeight').matchHeight();
+      $(once('matchHeight', '.notification_bar .match')).matchHeight();
     }
   }
 
